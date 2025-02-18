@@ -7,9 +7,9 @@
   "description": "A test application for the module of Dynamic Web Technologies.",
   "icons": [
     {
-      "src": "assets/check.svg",
-      "sizes": "512x512",
-      "type": "image/svg"
+      "src": "/assets/check.svg",
+      "sizes": "48x48",
+      "type": "image/svg+xml"
     }
   ]
 }
