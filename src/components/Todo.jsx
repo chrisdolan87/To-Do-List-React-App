@@ -57,8 +57,11 @@ function Todo(props) {
         />
         <label className="todo-label" htmlFor={props.id}>
           {props.name}
+          &nbsp;| la {props.latitude}
+          &nbsp;| lo {props.longitude}
         </label>
       </div>
+
       <div className="btn-group">
         <button type="button" className="btn" onClick={() => setEditing(true)}>
           Edit <span className="visually-hidden">{props.name}</span>

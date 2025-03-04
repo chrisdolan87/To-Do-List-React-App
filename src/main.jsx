@@ -17,9 +17,24 @@ if ("serviceWorker" in navigator) {
 }
 
 const DATA = [
-  { id: "todo-0", name: "Eat", completed: true },
-  { id: "todo-1", name: "Sleep", completed: false },
-  { id: "todo-2", name: "Repeat", completed: false },
+  {
+    id: "todo-0",
+    name: "Eat",
+    completed: true,
+    location: { latitude: "##", longitude: "##", error: "##" },
+  },
+  {
+    id: "todo-1",
+    name: "Sleep",
+    completed: false,
+    location: { latitude: "##", longitude: "##", error: "##" },
+  },
+  {
+    id: "todo-2",
+    name: "Repeat",
+    completed: false,
+    location: { latitude: "##", longitude: "##", error: "##" },
+  },
 ];
 
 createRoot(document.getElementById("root")).render(
