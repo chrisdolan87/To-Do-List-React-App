@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import "./App.css";
 import Form from "./components/Form";
@@ -14,7 +14,17 @@ const FILTER_MAP = {
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
 export default function App(props) {
-  const [tasks, setTasks] = useState(props.tasks);
+
+  function usePersistedState(key, defaultValue) {
+    const [state, setState] = useState(() => JSON.parse(localStorage.getItem(key)) || defaultValue);
+
+    useEffect(() => {
+      localStorage.setItem(key, JSON.stringify(state));
+    }, [key, state]);
+    return [state, setState];
+  } 
+
+  const [tasks, setTasks] = usePersistedState("tasks", []);
   const [filter, setFilter] = useState("All");
   const [lastInsertedID, setLastInsertedID] = useState("");
 
