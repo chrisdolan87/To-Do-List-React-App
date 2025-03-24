@@ -4,6 +4,7 @@ import "./App.css";
 import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import Todo from "./components/Todo";
+import CameraRef from "./cameraRef";
 
 const FILTER_MAP = {
   All: () => true,
@@ -12,7 +13,7 @@ const FILTER_MAP = {
 };
 const FILTER_NAMES = Object.keys(FILTER_MAP);
 
-function App(props) {
+export default function App(props) {
   const [tasks, setTasks] = useState(props.tasks);
   const [filter, setFilter] = useState("All");
   const [lastInsertedID, setLastInsertedID] = useState("");
@@ -23,7 +24,7 @@ function App(props) {
       id: id,
       name: name,
       completed: false,
-      location: { latitude: "##", longitude: "##", error: "##" },
+      location: { latitude: "##", longitude: "##", mapURL: "##", error: "##" },
     };
     setLastInsertedID(id);
     setTasks([...tasks, newTask]);
@@ -60,19 +61,21 @@ function App(props) {
     setTasks(remainingTasks);
   }
 
-  const taskList = tasks.filter(FILTER_MAP[filter]).map((task) => (
-    <Todo
-      id={task.id}
-      name={task.name}
-      completed={task.completed}
-      key={task.id}
-      latitude={task.location.latitude}
-      longitude={task.location.longitude}
-      toggleTaskCompleted={toggleTaskCompleted}
-      deleteTask={deleteTask}
-      editTask={editTask}
-    />
-  ));
+  const taskList = tasks
+    ?.filter(FILTER_MAP[filter])
+    .map((task) => (
+      <Todo
+        id={task.id}
+        name={task.name}
+        completed={task.completed}
+        key={task.id}
+        location={task.location}
+        toggleTaskCompleted={toggleTaskCompleted}
+        photoedTask={photoedTask}
+        deleteTask={deleteTask}
+        editTask={editTask}
+      />
+    ));
 
   const filterList = FILTER_NAMES.map((name) => (
     <FilterButton
@@ -95,7 +98,7 @@ function App(props) {
   const success = (position) => {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    console.log(latitude, longitude);
+    const mapURL = `https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`
     console.log(`Latitude: ${latitude}°, Longitude: ${longitude}°`);
     console.log(
       `Try here: https://www.openstreetmap.org/#map=18/${latitude}/${longitude}`
@@ -103,10 +106,11 @@ function App(props) {
     locateTask(lastInsertedID, {
       latitude: latitude,
       longitude: longitude,
+      mapURL: mapURL,
       error: "",
     });
   };
-  
+
   const error = () => {
     console.log("Unable to retrieve your location");
   };
@@ -129,6 +133,21 @@ function App(props) {
   const tasksNoun = taskList.length !== 1 ? "tasks" : "task";
   const headingText = `${taskList.length} ${tasksNoun} remaining`;
 
+  function photoedTask(id) {
+    console.log("photoedTask", id);
+    const photoedTaskList = tasks.map((task) => {
+      // if this task has the same ID as the edited task
+      if (id === task.id) {
+        // 1 à Set photo property to true for a task identified by id when a photo for that
+        // task is saved.
+        return { ...task, photo: true };
+      }
+      return task;
+    });
+    console.log(photoedTaskList);
+    setTasks(photoedTaskList); // 2 à Update your tasks list appending the task with photo.
+  }
+
   return (
     <div className="app stack-large">
       <h1>To do list</h1>
@@ -149,5 +168,3 @@ function App(props) {
     </div>
   );
 }
-
-export default App;

@@ -5,10 +5,10 @@
 }
 
 .app {
-    border: 1px solid black;
-    border-radius: 1rem;
+    /* border: 1px solid black; */
+    /* border-radius: 1rem; */
     padding: 2rem;
-    box-shadow: 0px 10px 20px black;
+    /* box-shadow: 0px 10px 20px black; */
 }
 
 .add-task-form {
