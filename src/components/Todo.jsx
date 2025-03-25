@@ -59,12 +59,16 @@ function Todo(props) {
     return (
       <>
         {!imgSrc && ( // Before image capture show live picture from camera
-          <Webcam audio={false} width={600}
-          height={400} ref={webcamRef} screenshotFormat="image/jpeg" />
+          <Webcam
+            audio={false}
+            width="100%"
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+          />
         )}
-        {imgSrc && <img src={imgSrc} />} // After image capture show the static
+        {imgSrc && <img className="modal-div" src={imgSrc} />} // After image capture show the static
         picture captured
-        <div className="btn-group">
+        <div className="btn-group modal-div">
           {!imgSrc && ( // Before image capture show capture button &functionality
             <button
               type="button"
@@ -97,8 +101,8 @@ function Todo(props) {
     const photoSrc = getPhotoSrc(props.id);
     return (
       <>
-        <div>
-          <img src={photoSrc} alt={props.name} />
+        <div className="modal-div">
+          <img className="modal-div" src={photoSrc} alt={props.name} />
         </div>
       </>
     );
@@ -166,7 +170,7 @@ function Todo(props) {
             </button>
           }
           modal>
-          <div>
+          <div className="modal-div">
             <WebcamCapture id={props.id} photoedTask={props.photoedTask} />
           </div>
         </Popup>
@@ -179,7 +183,7 @@ function Todo(props) {
             </button>
           }
           modal>
-          <div>
+          <div className="modal-div">
             <ViewPhoto id={props.id} alt={props.name} />
           </div>
         </Popup>
